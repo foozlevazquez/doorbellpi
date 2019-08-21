@@ -1,0 +1,11 @@
+[Unit]
+Description=Doorbell Sensor Server
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 -u \
+    /home/pi/doorbellpi/sensor/sensor.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
