@@ -268,8 +268,8 @@ if __name__ == '__main__':
             sleep(.010)
             top_level_iter += 1
 
-            if (top_level_iter % 100) == 0:
-                logging.debug("iteration %s", top_level_iter)
+            # if (top_level_iter % 100) == 0:
+            #     logging.debug("iteration %s", top_level_iter)
 
     except KeyboardInterrupt:
             pass
