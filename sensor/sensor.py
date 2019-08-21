@@ -6,7 +6,12 @@ import threading
 import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
 
 
+os.sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                '../lib/py'))
+
+
 from mq import RabbitMQ
+
 
 class ThreadSafeDict:
 

@@ -7,8 +7,11 @@ import subprocess
 import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
 
 
-from mq import RabbitMQ
+os.sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                '../lib/py'))
 
+
+from mq import RabbitMQ
 
 
 def handle_message(ch, method, properties, body):
