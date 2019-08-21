@@ -1,6 +1,7 @@
 
 deps:
 	sudo apt-get -y install ssmtp mailutils
+	sudo pip3 install rabbitmq
 	sudo pip3 install pika
 
 
