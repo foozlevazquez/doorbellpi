@@ -31,8 +31,10 @@ class RabbitMQ:
 
     @classmethod
     def publish(cls, message):
+        cls._init()
         cls.channel.basic_publish(exchange=EXCHANGE_NAME, routing_key='',
                                   body=message)
+        cls.channel.close()
 
     @classmethod
     def init_subscriber(cls, callback_fn=None):

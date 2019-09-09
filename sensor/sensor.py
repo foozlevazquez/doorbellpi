@@ -253,7 +253,6 @@ class AcknowledgeStateOff(AcknowledgeState):
 
 if __name__ == '__main__':
     try:
-        RabbitMQ.init_publisher()
         RabbitMQ.publish("2215NNorris:front_doorbell:program_start")
 
         Hardware.setup()
