@@ -28,8 +28,12 @@ class MQTT:
     def init_subscriber(cls, callback_fn=None):
         assert callback_fn
 
+        def _on_message_wrapper(client, userdata, message):
+            s = message.payload.decode('utf-8')
+            callback_fn(s)
+
         cls._init()
-        cls.client.on_message = callback_fn
+        cls.client.on_message = _on_message_wrapper
         cls.client.subscribe(TOPIC_NAME)
 
     @classmethod
@@ -47,8 +51,7 @@ class MQTT:
 def do_subscriber(blocking=False):
     done = False
 
-    def _on_message(client, userdata, message):
-        s = message.payload.decode('utf-8')
+    def _on_message(message):
         print(" received: {}".format(s))
         if message == 'QUIT':
             done = True

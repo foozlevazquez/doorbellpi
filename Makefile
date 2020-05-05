@@ -1,9 +1,9 @@
 
 deps:
 	sudo apt-get -y install ssmtp mailutils
-	sudo pip3 install rabbitmq
-	sudo pip3 install pika
-
+	sudo pip3 install paho-mqtt
+	# sudo pip3 install rabbitmq
+	# sudo pip3 install pika
 
 SYSTEMD_SERVICE_DIR = /etc/systemd/system
 

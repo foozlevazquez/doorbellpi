@@ -7,19 +7,14 @@ import subprocess
 
 import requests
 
-import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
-
-
 os.sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                 '../lib/py'))
 
-from mq import RabbitMQ
+from doorbell_mqtt import MQTT
 
-
-def handle_message(ch, method, properties, body):
-    print(" received: {}".format(body))
-
-    if 'pressed' in body.decode('utf-8'):
+def handle_message(s):
+    print(" received: {}".format(s))
+    if 'pressed' in s:
         logging.info("Playing...")
         subprocess.run(["/usr/bin/aplay", "/home/pi/ChurchTowerClock.wav"])
 
@@ -36,6 +31,7 @@ if __name__ == '__main__':
 
     try:
         logging.info("Starting, waiting for messages...")
-        RabbitMQ.init_subscriber(callback_fn=handle_message)
+        MQTT.init_subscriber(callback_fn=handle_message)
+        MQTT.check(block=True)
     except KeyboardInterrupt:
             pass
