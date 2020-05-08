@@ -11,8 +11,7 @@ os.sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                 '../lib/py'))
 
 
-from mq import RabbitMQ
-
+from doorbell_mqtt import MQTT
 
 class ThreadSafeDict:
 
@@ -199,7 +198,7 @@ class WaitState(State):
     def button_callback(cls, channel):
         super().button_callback(channel)
 
-        RabbitMQ.publish("2215NNorris:front_doorbell:pressed")
+        MQTT.publish("2215NNorris:front_doorbell:pressed")
         set_press_dt()
         inc_press_count()
         set_state(AcknowledgeStateOn)
