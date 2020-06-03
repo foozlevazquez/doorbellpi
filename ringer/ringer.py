@@ -1,6 +1,6 @@
 import os
 from datetime import datetime, timedelta
-from time import sleep, time
+import time
 import logging
 import threading
 import subprocess
@@ -24,14 +24,26 @@ def handle_message(s):
         # with open('/opt/doorbell_pics/{}.jpg'.format(dstr), 'wb') as f:
         #     f.write(r.content)
 
-
-if __name__ == '__main__':
+def main():
     logging.basicConfig(format='%(asctime)s[%(levelname)s]:%(message)s',
                         level=logging.DEBUG)
 
+    logging.info("Starting...")
+
+    started = False
+    while not started:
+        try:
+            MQTT.init_subscriber(callback_fn=handle_message)
+            started = True
+            logging.info("...waiting for messages...")
+        except ConnectionRefusedError:
+            logging.warning("waiting for MQTT, sleeping...")
+            time.sleep(5)
+
+    MQTT.check(block=True)
+
+if __name__ == '__main__':
     try:
-        logging.info("Starting, waiting for messages...")
-        MQTT.init_subscriber(callback_fn=handle_message)
-        MQTT.check(block=True)
+        main()
     except KeyboardInterrupt:
             pass
