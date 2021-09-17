@@ -13,7 +13,6 @@ os.sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),
 from doorbell_mqtt import MQTT
 
 def handle_message(s):
-    print(" received: {}".format(s))
     if 'pressed' in s:
         logging.info("Playing...")
         subprocess.run(["/usr/bin/aplay", "/home/pi/ChurchTowerClock.wav"])
@@ -36,8 +35,8 @@ def main():
             MQTT.init_subscriber(callback_fn=handle_message)
             started = True
             logging.info("...waiting for messages...")
-        except ConnectionRefusedError:
-            logging.warning("waiting for MQTT, sleeping...")
+        except Exception as exc:
+            logging.warning("Got %s waiting...", str(exc))
             time.sleep(5)
 
     MQTT.check(block=True)
